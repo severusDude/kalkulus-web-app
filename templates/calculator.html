@@ -5,7 +5,7 @@
 {% block calculator %}
     {% if func_mode == "linear" %}
 
-        <h2>Linear</h2>
+        <h2>Linear Function</h2>
 
         <form id="coefficient_form" method="POST">
             coefficient: <input type="number" name="coefficient">
@@ -18,7 +18,7 @@
 
     {% elif func_mode == "quadratic" %}
 
-        <h2>quadratic</h2>
+        <h2>Quadratic Function</h2>
     
         <form id="coefficient_form" method="POST">
             coefficient: <input type="number" name="coefficient_a">
@@ -41,7 +41,7 @@
 
 {% block result %}
 
-    <h3>{{ function }}</h3>\
+    <h3>{{ function }}</h3>
 
     {% for point in points %}
         <p>{{ point }}</p>
