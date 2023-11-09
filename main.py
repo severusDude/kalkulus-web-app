@@ -31,15 +31,26 @@ def get_quadratic_func_points(*coef):
     return points
 
 
-def draw_graph(coefficient_a, coefficient_b, coefficient_c):
+def draw_graph(func_type, *var):
 
     fig = Figure()
     ax = fig.subplots()
 
-    # get extremum and intersecting axis points
-    points = get_quadratic_func_points(
-        coefficient_a, coefficient_b, coefficient_c)
-    print(points)
+    if func_type == "linear":
+        points = get_linear_func_points(var[0], var[1])
+
+        # var for creating plot
+        x = np.arange(
+            *get_coord_limit(get_highest_coord_value(points)[0]), 0.01)
+        y = (var[0]*x) + var[1]
+
+    elif func_type == "quadratic":
+        points = get_quadratic_func_points(var[0], var[1], var[2])
+
+        # var for creating plot
+        x = np.arange(
+            *get_coord_limit(get_highest_coord_value(points)[0]), 0.01)
+        y = (var[0]*x)**2 + (var[1]*x) + (var[2])
 
     def get_highest_coord_value(coord_list):
         axis_limit = [0, 0]
@@ -57,10 +68,6 @@ def draw_graph(coefficient_a, coefficient_b, coefficient_c):
         return axis_limit
 
     def get_coord_limit(x): return (-abs(x)*2, abs(x)*2)
-
-    # var for creating plot
-    x = np.arange(*get_coord_limit(get_highest_coord_value(points)[0]), 0.01)
-    y = (coefficient_a*x)**2 + (coefficient_b*x) + (coefficient_c)
 
     ax.plot(x, y)
 
