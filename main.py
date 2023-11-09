@@ -81,7 +81,7 @@ def draw_graph(func_type, *var):
     buf = BytesIO()
     fig.savefig(buf, format="png")
 
-    image = base64.encode(buf.getbuffer()).decode("ascii")
+    image = base64.b64encode(buf.getbuffer()).decode("ascii")
 
     return image
 

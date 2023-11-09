@@ -37,5 +37,18 @@
         }
     </script>
 
-
 {% endblock calculator %}
+
+{% block result %}
+
+    <h3>{{ function }}</h3>\
+
+    {% for point in points %}
+        <p>{{ point }}</p>
+    {% endfor %}
+
+    {% if graph %}
+        <img src='data:image/png;base64,{{ graph }}' alt="Graph cannot be displayed"/>
+    {% endif %}
+
+{% endblock result %}

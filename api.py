@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+from main import *
 
 app = Flask(__name__)
 
@@ -10,7 +11,18 @@ def hello():
 
 @app.route("/linear", methods=["GET", "POST"])
 def linear():
-    return render_template('calculator.html', func_mode="linear")
+
+    if request.method == "GET":
+        return render_template('calculator.html', func_mode="linear")
+
+    elif request.method == "POST":
+
+        coef = float(request.form['coefficient'])
+        const = float(request.form['constant'])
+
+        image = draw_graph("linear", coef, const)
+
+        return render_template('calculator.html', func_mode="linear", graph=image)
 
 
 @app.route("/quadratic", methods=["GET", "POST"])
