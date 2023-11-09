@@ -27,7 +27,19 @@ def linear():
 
 @app.route("/quadratic", methods=["GET", "POST"])
 def quadratic():
-    return render_template('calculator.html', func_mode="quadratic")
+
+    if request.method == "GET":
+        return render_template('calculator.html', func_mode="quadratic")
+
+    elif request.method == "POST":
+
+        coef_a = float(request.form['coefficient_a'])
+        coef_b = float(request.form['coefficient_b'])
+        coef_c = float(request.form['coefficient_c'])
+
+        image = draw_graph("quadratic", coef_a, coef_b, coef_c)
+
+        return render_template('calculator.html', func_mode="quadratic", graph=image)
 
 
 if __name__ == "__main__":
