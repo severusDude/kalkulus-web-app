@@ -1,0 +1,14 @@
+{% extends 'home.html' %}
+
+{% block calculator %}
+    {% if func_mode == "linear" %}
+
+        <p>linear</p>
+
+    {% elif func_mode == "quadratic" %}
+
+        <p>quadratic</p>
+
+    {% endif %}
+
+{% endblock calculator %}
