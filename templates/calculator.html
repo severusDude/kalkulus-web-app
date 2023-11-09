@@ -1,14 +1,41 @@
 {% extends 'home.html' %}
 
+{% block title %}Calculator - {% endblock title %}
+
 {% block calculator %}
     {% if func_mode == "linear" %}
 
-        <p>linear</p>
+        <h2>Linear</h2>
+
+        <form id="coefficient_form" method="POST">
+            coefficient: <input type="number" name="coefficient">
+            constant: <input type="number" name="constant">
+    
+            <input type="submit" value="OK">
+            <input type="button" onclick="reset()" value="Reset">
+        </form>
+
 
     {% elif func_mode == "quadratic" %}
 
-        <p>quadratic</p>
-
+        <h2>quadratic</h2>
+    
+        <form id="coefficient_form" method="POST">
+            coefficient: <input type="number" name="coefficient_a">
+            coefficient: <input type="number" name="coefficient_b">
+            coefficient: <input type="number" name="coefficient_c">
+    
+            <input type="submit" value="OK">
+            <input type="button" onclick="reset()" value="Reset">
+        </form>
+    
     {% endif %}
+
+    <script>
+        function reset() {
+            document.getElementById("coefficient_form").reset();
+        }
+    </script>
+
 
 {% endblock calculator %}
