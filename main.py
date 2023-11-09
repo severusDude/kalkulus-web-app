@@ -4,16 +4,29 @@ import base64
 from io import BytesIO
 
 
-def draw_points(coefficient_a, coefficient_b, coefficient_c):
+def get_linear_func_points(coef, const):
+    """Return list of coordinate of intersecting axis points of linear function"""
+
     points = []
 
-    points.append([(-coefficient_b/(2*coefficient_a)), -(coefficient_b **
-                  2-4*coefficient_a*coefficient_c)/(4*coefficient_a)])
+    points.append([0, const])
+    points.append([-const/coef, 0])
 
-    points.append([0, coefficient_c])
+    return points
+
+
+def get_quadratic_func_points(*coef):
+    """Return list of coordinate of extremum and intersecting axis points of quadratic function"""
+
+    points = []
+
+    points.append([(-coef[1]/(2*coef[0])), -(coef[1] **
+                  2-4*coef[0]*coef[2])/(4*coef[0])])
+
+    points.append([0, coef[2]])
 
     points.extend([[x, 0] for x in np.roots(
-        [coefficient_a, coefficient_b, coefficient_c])])
+        [coef[0], coef[1], coef[2]])])
 
     return points
 
@@ -24,7 +37,8 @@ def draw_graph(coefficient_a, coefficient_b, coefficient_c):
     ax = fig.subplots()
 
     # get extremum and intersecting axis points
-    points = draw_points(coefficient_a, coefficient_b, coefficient_c)
+    points = get_quadratic_func_points(
+        coefficient_a, coefficient_b, coefficient_c)
     print(points)
 
     def get_highest_coord_value(coord_list):
