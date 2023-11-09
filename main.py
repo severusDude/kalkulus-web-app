@@ -39,41 +39,28 @@ def draw_graph(func_type, *var):
     if func_type == "linear":
         points = get_linear_func_points(var[0], var[1])
 
+        xlim = get_coord_limit(get_highest_coord_value(points)[0])
+        ylim = get_coord_limit(get_highest_coord_value(points)[1])
+
         # var for creating plot
-        x = np.arange(
-            *get_coord_limit(get_highest_coord_value(points)[0]), 0.01)
+        x = np.arange(*xlim, 0.01)
         y = (var[0]*x) + var[1]
 
     elif func_type == "quadratic":
         points = get_quadratic_func_points(var[0], var[1], var[2])
 
+        xlim = get_coord_limit(get_highest_coord_value(points)[0])
+        ylim = get_coord_limit(get_highest_coord_value(points)[1])
+
         # var for creating plot
-        x = np.arange(
-            *get_coord_limit(get_highest_coord_value(points)[0]), 0.01)
+        x = np.arange(*xlim, 0.01)
         y = (var[0]*x)**2 + (var[1]*x) + (var[2])
-
-    def get_highest_coord_value(coord_list):
-        axis_limit = [0, 0]
-
-        for coord in coord_list:
-            x_coord = abs(coord[0])
-            y_coord = abs(coord[1])
-
-            if x_coord > axis_limit[0]:
-                axis_limit[0] = x_coord
-
-            if y_coord > axis_limit[1]:
-                axis_limit[1] = y_coord
-
-        return axis_limit
-
-    def get_coord_limit(x): return (-abs(x)*2, abs(x)*2)
 
     ax.plot(x, y)
 
     # enable grid and limit the y-axis
     ax.grid(True)
-    ax.set_ylim(*get_coord_limit(get_highest_coord_value(points)[1]))
+    ax.set_ylim(*ylim)
 
     # draw x-axis and y-axis
     ax.spines['left'].set_position(('data', 0))
@@ -97,6 +84,25 @@ def draw_graph(func_type, *var):
     image = base64.encode(buf.getbuffer()).decode("ascii")
 
     return image
+
+
+def get_highest_coord_value(coord_list):
+    axis_limit = [0, 0]
+
+    for coord in coord_list:
+        x_coord = abs(coord[0])
+        y_coord = abs(coord[1])
+
+        if x_coord > axis_limit[0]:
+            axis_limit[0] = x_coord
+
+        if y_coord > axis_limit[1]:
+            axis_limit[1] = y_coord
+
+    return axis_limit
+
+
+def get_coord_limit(x): return (-abs(x)*2, abs(x)*2)
 
 # if __name__ == "__main__":
 #     draw_graph(2, 2, -4)
