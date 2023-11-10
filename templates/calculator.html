@@ -28,6 +28,20 @@
             <input type="submit" value="OK">
             <input type="button" onclick="reset()" value="Reset">
         </form>
+
+    {% elif func_mode == "cubic" %}
+
+        <h2>Cubic Function</h2>
+        
+        <form id="coefficient_form" method="POST">
+            coefficient: <input type="number" name="coefficient_a">
+            coefficient: <input type="number" name="coefficient_b">
+            coefficient: <input type="number" name="coefficient_c">
+            coefficient: <input type="number" name="coefficient_d">
+
+            <input type="submit" value="OK">
+            <input type="button" onclick="reset()" value="Reset">
+        </form>
     
     {% endif %}
 
