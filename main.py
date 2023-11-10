@@ -119,6 +119,16 @@ def draw_graph(func_type, *var):
         x = np.arange(*xlim, 0.01)
         y = (var[0]*x)**2 + (var[1]*x) + (var[2])
 
+    elif func_type == "cubic":
+        points = get_cubic_func_points(*var)
+
+        xlim = get_coord_limit(get_highest_coord_value(points)[0])
+        ylim = get_coord_limit(get_highest_coord_value(points)[1])
+
+        # var for creating plot
+        x = np.arange(*xlim, 0.01)
+        y = var[0]*x**3 + var[1]*x**2 + var[2]*x + var[3]
+
     ax.plot(x, y)
 
     # enable grid and limit the y-axis
@@ -168,5 +178,5 @@ def get_highest_coord_value(coord_list):
 def get_coord_limit(x): return (-abs(x)*2, abs(x)*2)
 
 
-if __name__ == "__main__":
-    print(get_cubic_func_points(2, -3, 0, 0))
+# if __name__ == "__main__":
+#     print(get_cubic_func_points(2, -3, 0, 0))
