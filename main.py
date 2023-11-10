@@ -2,6 +2,7 @@ from matplotlib.figure import Figure
 import numpy as np
 import base64
 from io import BytesIO
+from sympy import diff, solve, symbols
 
 
 def get_linear_func_points(coef, const):
@@ -28,6 +29,68 @@ def get_quadratic_func_points(*coef):
     points.extend([[x, 0] for x in np.roots(
         [coef[0], coef[1], coef[2]])])
 
+    return points
+
+
+def get_cubic_func_points(*coef):
+    """Return list of coordinate of stationary and intersecting axis points of cubic function"""
+
+    points = []
+
+    x = symbols('x')
+
+    # cubic function
+    f_x = coef[0]*x**3 + coef[1]*x**2 + coef[2]*x + coef[3]
+
+    # derivative of the cubic function
+    f_prime = diff(f_x, x)
+
+    # roots for identifying x-axis intersection
+    x_roots = solve(f_prime, x)
+
+    # find stationary points
+    stationary_points = [
+        [root, f_x.subs(x, root)] for root in x_roots]
+
+    # find y-axis intersection
+    y_intercept = [f_x.subs(x, 0), 0]
+
+    # find x-axis intersection
+    x_intercept = [[0, root] for root in solve(f_x, x)]
+
+    points = stationary_points + [y_intercept] + x_intercept
+
+    # critical_points = solve(f_prime, x)
+
+    # if critical_points:
+    #     # Calculate the second derivative
+    #     f_double_prime = diff(f_prime, x)
+
+    #     # Find points where the second derivative is zero or undefined
+    #     inflection_points = solve(f_double_prime, x)
+
+    #     # If there are no inflection points and critical points, there's no min/max
+    #     if not inflection_points:
+    #         if len(critical_points) == 1:
+    #             min_max_point = (
+    #                 critical_points[0], y.subs(x, critical_points[0]))
+    #             print(min_max_point)
+
+    # print(y_intercept.evalf())
+
+    # find x-coordinate
+    # stationary_x = solve(y_prime, x)
+
+    # stationary_point = [(point, y.subs(x, point)) for point in stationary_x]
+
+    # points.extend([(point, y.subs(x, point)) for point in stationary_x])
+
+    # points.append(y_intercept)
+    # points.append(x_roots)
+
+    # points = x_roots + [(0, y_intercept)] + stationary_point
+
+    # return ([(coord.evalf(), y.subs(x, coord).evalf()) for coord in x_roots], y_intercept, stationary_point)
     return points
 
 
@@ -104,5 +167,6 @@ def get_highest_coord_value(coord_list):
 
 def get_coord_limit(x): return (-abs(x)*2, abs(x)*2)
 
-# if __name__ == "__main__":
-#     draw_graph(2, 2, -4)
+
+if __name__ == "__main__":
+    print(get_cubic_func_points(2, -3, 0, 0))
