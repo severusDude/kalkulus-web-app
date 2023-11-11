@@ -50,7 +50,7 @@ def get_cubic_func_points(*coef):
 
     # find stationary points if the roots is float
     stationary_points = [[root, f_x.subs(x, root)]
-                         for root in x_roots if type(root) == float]
+                         for root in x_roots if type(root).__name__ == 'Float']
     stationary_points = [[round(coord[0], 2), round(coord[1], 2)]
                          for coord in stationary_points]
 
