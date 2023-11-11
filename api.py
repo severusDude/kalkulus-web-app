@@ -42,5 +42,23 @@ def quadratic():
         return render_template('calculator.html', func_mode="quadratic", graph=image)
 
 
+@app.route("/cubic", methods=["GET", "POST"])
+def cubic():
+
+    if request.method == "GET":
+        return render_template('calculator.html', func_mode="cubic")
+
+    elif request.method == "POST":
+
+        coef_a = float(request.form['coefficient_a'])
+        coef_b = float(request.form['coefficient_b'])
+        coef_c = float(request.form['coefficient_c'])
+        coef_d = float(request.form['coefficient_d'])
+
+        image = draw_graph("cubic", coef_a, coef_b, coef_c, coef_d)
+
+        return render_template('calculator.html', func_mode="cubic", graph=image)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
