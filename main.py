@@ -48,49 +48,20 @@ def get_cubic_func_points(*coef):
     # roots for identifying x-axis intersection
     x_roots = solve(f_prime, x)
 
-    # find stationary points
-    stationary_points = [
-        [root, f_x.subs(x, root)] for root in x_roots]
+    # find stationary points if the roots is float
+    stationary_points = [[root, f_x.subs(x, root)]
+                         for root in x_roots if type(root) == float]
+    stationary_points = [[round(coord[0], 2), round(coord[1], 2)]
+                         for coord in stationary_points]
 
     # find y-axis intersection
-    y_intercept = [f_x.subs(x, 0), 0]
+    y_intercept = [0, round(f_x.subs(x, 0), 2)]
 
     # find x-axis intersection
-    x_intercept = [[0, root] for root in solve(f_x, x)]
+    x_intercept = [[round(root, 2), 0] for root in solve(f_x, x)]
 
     points = stationary_points + [y_intercept] + x_intercept
 
-    # critical_points = solve(f_prime, x)
-
-    # if critical_points:
-    #     # Calculate the second derivative
-    #     f_double_prime = diff(f_prime, x)
-
-    #     # Find points where the second derivative is zero or undefined
-    #     inflection_points = solve(f_double_prime, x)
-
-    #     # If there are no inflection points and critical points, there's no min/max
-    #     if not inflection_points:
-    #         if len(critical_points) == 1:
-    #             min_max_point = (
-    #                 critical_points[0], y.subs(x, critical_points[0]))
-    #             print(min_max_point)
-
-    # print(y_intercept.evalf())
-
-    # find x-coordinate
-    # stationary_x = solve(y_prime, x)
-
-    # stationary_point = [(point, y.subs(x, point)) for point in stationary_x]
-
-    # points.extend([(point, y.subs(x, point)) for point in stationary_x])
-
-    # points.append(y_intercept)
-    # points.append(x_roots)
-
-    # points = x_roots + [(0, y_intercept)] + stationary_point
-
-    # return ([(coord.evalf(), y.subs(x, coord).evalf()) for coord in x_roots], y_intercept, stationary_point)
     return points
 
 
@@ -146,10 +117,13 @@ def draw_graph(func_type, *var):
         x[0]+abs(x[0]*10/100), x[1]-abs(x[1]*10/100))
 
     for coord in points:
-        ax.plot(coord[0], coord[1], marker="o", markersize=5,
-                markerfacecolor="red", markeredgecolor="black")
-        ax.annotate(
-            f"({str(round(coord[0], 2))}, {str(round(coord[1], 2))})", get_point_marker_placement(coord))
+        try:
+            ax.plot(coord[0], coord[1], marker="o", markersize=5,
+                    markerfacecolor="red", markeredgecolor="black")
+            ax.annotate(
+                f"({str(round(coord[0], 2))}, {str(round(coord[1], 2))})", get_point_marker_placement(coord))
+        except:
+            pass
 
     buf = BytesIO()
     fig.savefig(buf, format="png")
@@ -163,8 +137,8 @@ def get_highest_coord_value(coord_list):
     axis_limit = [0, 0]
 
     for coord in coord_list:
-        x_coord = abs(coord[0])
-        y_coord = abs(coord[1])
+        x_coord = float(abs(coord[0]))
+        y_coord = float(abs(coord[1]))
 
         if x_coord > axis_limit[0]:
             axis_limit[0] = x_coord
