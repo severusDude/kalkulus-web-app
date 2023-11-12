@@ -129,8 +129,9 @@ def draw_graph(func_type, *var):
     fig.savefig(buf, format="png")
 
     image = base64.b64encode(buf.getbuffer()).decode("ascii")
+    func_exppr = get_func_exppr(*var)
 
-    return image
+    return (image, points, func_exppr)
 
 
 def get_func_exppr(*numbers):
