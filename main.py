@@ -21,12 +21,12 @@ def get_quadratic_func_points(*coef):
 
     points = []
 
-    points.append([(-coef[1]/(2*coef[0])), -(coef[1] **
-                  2-4*coef[0]*coef[2])/(4*coef[0])])
+    points.append([round((-coef[1]/(2*coef[0])), 2), round(-(coef[1] **
+                  2-4*coef[0]*coef[2])/(4*coef[0]), 2)])
 
     points.append([0, coef[2]])
 
-    points.extend([[x, 0] for x in np.roots(
+    points.extend([[round(x, 2), 0] for x in np.roots(
         [coef[0], coef[1], coef[2]])])
 
     return points
@@ -58,7 +58,8 @@ def get_cubic_func_points(*coef):
     y_intercept = [0, round(float(f_x.subs(x, 0)), 2)]
 
     # find x-axis intersection
-    x_intercept = [[round(float(root), 2), 0] for root in solve(f_x, x)]
+    x_intercept = [[round(float(root), 2), 0] for root in solve(
+        f_x, x) if type(root).__name__ == 'Float']
 
     points = stationary_points + [y_intercept] + x_intercept
 
