@@ -78,7 +78,7 @@ def draw_graph(func_type, *var):
 
         # var for creating plot
         x = np.arange(*xlim, 0.01)
-        y = (var[0]*x) + var[1]
+        y = var[0]*x + var[1]
 
     elif func_type == "quadratic":
         points = get_quadratic_func_points(var[0], var[1], var[2])
@@ -88,7 +88,7 @@ def draw_graph(func_type, *var):
 
         # var for creating plot
         x = np.arange(*xlim, 0.01)
-        y = (var[0]*x)**2 + (var[1]*x) + (var[2])
+        y = var[0]*x**2 + var[1]*x + var[2]
 
     elif func_type == "cubic":
         points = get_cubic_func_points(*var)
