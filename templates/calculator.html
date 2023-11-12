@@ -55,7 +55,7 @@
 
 {% block result %}
 
-    <h3>{{ function }}</h3>
+    <h3>{{ func_expr|safe }}</h3>
 
     {% for point in points %}
         <p>{{ point }}</p>
