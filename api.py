@@ -20,9 +20,9 @@ def linear():
         coef = float(request.form['coefficient'])
         const = float(request.form['constant'])
 
-        image = draw_graph("linear", coef, const)
+        result = draw_graph("linear", coef, const)
 
-        return render_template('calculator.html', func_mode="linear", graph=image)
+        return render_template('calculator.html', func_mode="linear", graph=result[0], points=result[1], func_expr=result[2])
 
 
 @app.route("/quadratic", methods=["GET", "POST"])
@@ -37,9 +37,9 @@ def quadratic():
         coef_b = float(request.form['coefficient_b'])
         coef_c = float(request.form['coefficient_c'])
 
-        image = draw_graph("quadratic", coef_a, coef_b, coef_c)
+        result = draw_graph("quadratic", coef_a, coef_b, coef_c)
 
-        return render_template('calculator.html', func_mode="quadratic", graph=image)
+        return render_template('calculator.html', func_mode="quadratic", graph=result[0], points=result[1], func_expr=result[2])
 
 
 @app.route("/cubic", methods=["GET", "POST"])
@@ -55,9 +55,9 @@ def cubic():
         coef_c = float(request.form['coefficient_c'])
         coef_d = float(request.form['coefficient_d'])
 
-        image = draw_graph("cubic", coef_a, coef_b, coef_c, coef_d)
+        result = draw_graph("cubic", coef_a, coef_b, coef_c, coef_d)
 
-        return render_template('calculator.html', func_mode="cubic", graph=image)
+        return render_template('calculator.html', func_mode="cubic", graph=result[0], points=result[1], func_expr=result[2])
 
 
 if __name__ == "__main__":
