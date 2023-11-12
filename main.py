@@ -51,11 +51,11 @@ def get_cubic_func_points(*coef):
     # find stationary points if the roots is float
     stationary_points = [[root, f_x.subs(x, root)]
                          for root in x_roots if type(root).__name__ == 'Float']
-    stationary_points = [[round(coord[0], 2), round(coord[1], 2)]
+    stationary_points = [[round(float(coord[0]), 2), round(float(coord[1]), 2)]
                          for coord in stationary_points]
 
     # find y-axis intersection
-    y_intercept = [0, round(f_x.subs(x, 0), 2)]
+    y_intercept = [0, round(float(f_x.subs(x, 0)), 2)]
 
     # find x-axis intersection
     x_intercept = [[round(root, 2), 0] for root in solve(f_x, x)]
