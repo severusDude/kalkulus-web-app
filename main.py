@@ -58,7 +58,7 @@ def get_cubic_func_points(*coef):
     y_intercept = [0, round(float(f_x.subs(x, 0)), 2)]
 
     # find x-axis intersection
-    x_intercept = [[round(root, 2), 0] for root in solve(f_x, x)]
+    x_intercept = [[round(float(root), 2), 0] for root in solve(f_x, x)]
 
     points = stationary_points + [y_intercept] + x_intercept
 
