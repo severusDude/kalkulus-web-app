@@ -133,6 +133,40 @@ def draw_graph(func_type, *var):
     return image
 
 
+def get_func_exppr(*numbers):
+    func_exppr = ""
+
+    for i, num in enumerate(numbers):
+        num = int(num)
+        exponent = len(numbers) - i - 1
+
+        if num != 0:
+            if num < 0:
+                sign = "-"
+            else:
+                sign = "+"
+
+            # Handling coefficient value
+            if abs(num) != 1 and exponent > 1:
+                func_exppr += f"{sign} {abs(num)}x<sup>{exponent}</sup>"
+            elif abs(num) == 1 and exponent > 1:
+                func_exppr += f" {sign} x<sup>{exponent}</sup>"
+            elif abs(num) != 1 and exponent == 1:
+                func_exppr += f" {sign} {abs(num)}x"
+            elif abs(num) == 1 and exponent == 1:
+                func_exppr += f" {sign} x"
+            else:
+                func_exppr += f" {sign} {abs(num)}"
+
+    # Clean up if the func_exppr starts with a plus sign
+    func_exppr = func_exppr.strip()
+
+    if func_exppr.startswith("+ "):
+        func_exppr = func_exppr[2:]
+
+    return func_exppr
+
+
 def get_highest_coord_value(coord_list):
     axis_limit = [0, 0]
 
