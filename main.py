@@ -66,6 +66,57 @@ def get_cubic_func_points(*coef):
     return points
 
 
+def draw_multi_graph(func_type, func_info):
+
+    fig = Figure()
+    ax = fig.subplots()
+
+    func_detail = {}
+
+    for key, value in func_info.items():
+        x = np.arange(-10, 10, 0.01)
+
+        var = value['coef']
+
+        points = get_linear_func_points(*var)
+
+        if value['show']:
+            y = var[0]*x + var[1]
+            ax.plot(x, y, color=value['color'])
+
+            if value['marker']:
+
+                # draw extremum and intersecting points
+                def get_point_marker_placement(x): return (
+                    x[0]+abs(x[0]*10/100), x[1]-abs(x[1]*10/100))
+
+                for coord in points:
+                    try:
+                        ax.plot(coord[0], coord[1], marker="o", markersize=5,
+                                markerfacecolor="red", markeredgecolor="black")
+                        ax.annotate(
+                            f"({str(round(coord[0], 2))}, {str(round(coord[1], 2))})", get_point_marker_placement(coord))
+                    except:
+                        pass
+
+    # enable grid and limit the y-axis
+    ax.grid(True)
+    # ax.set_ylim(*ylim)
+
+    # draw x-axis and y-axis
+    ax.spines['left'].set_position(('data', 0))
+    ax.spines['bottom'].set_position(('data', 0))
+    ax.spines['right'].set_color('none')
+    ax.spines['top'].set_color('none')
+
+    fig.savefig('../plot.png')
+
+    return func_detail
+
+    # print(key)
+    # print(value)
+
+
 def draw_graph(func_type, *var):
 
     fig = Figure()
@@ -188,5 +239,28 @@ def get_highest_coord_value(coord_list):
 def get_coord_limit(x): return (-abs(x)*2, abs(x)*2)
 
 
-# if __name__ == "__main__":
-#     print(get_cubic_func_points(2, -3, 0, 0))
+if __name__ == "__main__":
+    # print(get_cubic_func_points(2, -3, 0, 0))
+
+    func_list = {
+        'func_1': {
+            'coef': (2.0, 1.0),
+            'show': True,
+            'marker': True,
+            'color': 'blue'
+        },
+        'func_2': {
+            'coef': (4.0, -7.0),
+            'show': False,
+            'marker': True,
+            'color': 'red'
+        },
+        'func_3': {
+            'coef': (1.0, 3.0),
+            'show': True,
+            'marker': False,
+            'color': 'green'
+        }
+    }
+
+    draw_multi_graph("linear", func_list)
