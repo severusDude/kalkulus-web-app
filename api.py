@@ -1,11 +1,13 @@
-from flask import Flask, render_template, request
+from flask import Flask, session, render_template, request
 from main import *
 
 app = Flask(__name__)
+app.secret_key = "BAD_SECRET_KEY"
 
 
 @app.route("/", methods=["GET"])
 def hello():
+    session.clear()
     return render_template('home.html')
 
 
@@ -17,7 +19,7 @@ def linear():
 
     elif request.method == "POST":
 
-        coef = get_form_data()
+        coef = get_form_data(multi_query=False)
         result = draw_graph("linear", *coef)
 
         return render_template('calculator.html', func_mode="linear", graph=result[0], points=result[1], func_expr=result[2])
@@ -51,13 +53,19 @@ def cubic():
         return render_template('calculator.html', func_mode="cubic", graph=result[0], points=result[1], func_expr=result[2])
 
 
-def get_form_data():
+def get_form_data(multi_query=True):
     """Loop through posted form data and return it"""
 
     data = ()
+    func_information = {}
 
     for value in request.form.values():
         data = (*data, float(value))
+
+    if multi_query:
+        func_information['coef'] = data
+
+        return func_information
 
     return data
 
