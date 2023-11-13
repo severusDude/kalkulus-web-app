@@ -78,10 +78,19 @@ def draw_multi_graph(func_type, func_info):
 
         var = value['coef']
 
-        points = get_linear_func_points(*var)
-
         if value['show']:
-            y = var[0]*x + var[1]
+            if func_type == "linear":
+                points = get_linear_func_points(*var)
+                y = var[0]*x + var[1]
+
+            elif func_type == "quadratic":
+                points = get_quadratic_func_points(*var)
+                y = var[0]*x**2 + var[1]*x + var[2]
+
+            elif func_type == "cubic":
+                points = get_cubic_func_points(*var)
+                y = var[0]*x**3 + var[1]*x**2 + var[2]*x + var[3]
+
             ax.plot(x, y, color=value['color'])
 
             if value['marker']:
@@ -244,23 +253,23 @@ if __name__ == "__main__":
 
     func_list = {
         'func_1': {
-            'coef': (2.0, 1.0),
+            'coef': (2.0, -3.0, 0.0, 0.0),
             'show': True,
             'marker': True,
             'color': 'blue'
         },
         'func_2': {
-            'coef': (4.0, -7.0),
-            'show': False,
+            'coef': (-4.0, 0.0, 3.0, -7.0),
+            'show': True,
             'marker': True,
             'color': 'red'
         },
         'func_3': {
-            'coef': (1.0, 3.0),
+            'coef': (-7.0, 1.0, 3.0, -4.0),
             'show': True,
             'marker': False,
             'color': 'green'
         }
     }
 
-    draw_multi_graph("linear", func_list)
+    draw_multi_graph("cubic", func_list)
