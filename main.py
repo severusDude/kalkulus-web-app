@@ -71,7 +71,7 @@ def draw_multi_graph(func_type, func_info):
     fig = Figure()
     ax = fig.subplots()
 
-    func_detail = {}
+    func_detail = func_info
     coord_list = []
 
     # loop to get axis limit
@@ -87,6 +87,7 @@ def draw_multi_graph(func_type, func_info):
     for key, value in func_info.items():
         var = value['coef']
 
+        # draw graph if option enabled
         if value['show']:
             if func_type == "linear":
                 points = get_linear_func_points(*var)
@@ -117,6 +118,9 @@ def draw_multi_graph(func_type, func_info):
                     except:
                         pass
 
+        # added points and func_expr to function information
+        func_detail[key] = {'points': points, 'expr': get_func_exppr(*var)}
+
     # enable grid and limit the y-axis
     ax.grid(True)
     ax.set_ylim(*ylim)
@@ -127,12 +131,12 @@ def draw_multi_graph(func_type, func_info):
     ax.spines['right'].set_color('none')
     ax.spines['top'].set_color('none')
 
-    fig.savefig('../plot.png')
+    buf = BytesIO()
+    fig.savefig(buf, format="png")
 
-    return func_detail
+    image = base64.b64encode(buf.getbuffer()).decode("ascii")
 
-    # print(key)
-    # print(value)
+    return (image, func_detail)
 
 
 def draw_graph(func_type, *var):
@@ -257,28 +261,5 @@ def get_highest_coord_value(coord_list):
 def get_coord_limit(x): return (-abs(x)*2, abs(x)*2)
 
 
-if __name__ == "__main__":
-    # print(get_cubic_func_points(2, -3, 0, 0))
-
-    func_list = {
-        'func_1': {
-            'coef': (2.0, -3.0, 0.0, 0.0),
-            'show': True,
-            'marker': True,
-            'color': 'blue'
-        },
-        'func_2': {
-            'coef': (-4.0, 0.0, 3.0, -7.0),
-            'show': True,
-            'marker': True,
-            'color': 'red'
-        },
-        'func_3': {
-            'coef': (-7.0, 1.0, 3.0, -4.0),
-            'show': True,
-            'marker': False,
-            'color': 'green'
-        }
-    }
-
-    draw_multi_graph("cubic", func_list)
+# if __name__ == "__main__":
+#     print(get_cubic_func_points(2, -3, 0, 0))
