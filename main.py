@@ -71,7 +71,8 @@ def draw_multi_graph(func_type, func_info):
     fig = Figure()
     ax = fig.subplots()
 
-    func_detail = func_info
+    # use copy to prevent accidentally modified session data
+    func_detail = func_info.copy()
     coord_list = []
 
     # loop to get axis limit
