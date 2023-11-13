@@ -72,10 +72,19 @@ def draw_multi_graph(func_type, func_info):
     ax = fig.subplots()
 
     func_detail = {}
+    coord_list = []
+
+    # loop to get axis limit
+    for detail in func_info.values():
+        coords = get_cubic_func_points(*detail['coef'])
+        coord_list.extend(coords)
+
+    xlim = get_coord_limit(get_highest_coord_value(coord_list)[0])
+    ylim = get_coord_limit(get_highest_coord_value(coord_list)[1])
+
+    x = np.arange(*xlim, 0.01)
 
     for key, value in func_info.items():
-        x = np.arange(-10, 10, 0.01)
-
         var = value['coef']
 
         if value['show']:
@@ -110,7 +119,7 @@ def draw_multi_graph(func_type, func_info):
 
     # enable grid and limit the y-axis
     ax.grid(True)
-    # ax.set_ylim(*ylim)
+    ax.set_ylim(*ylim)
 
     # draw x-axis and y-axis
     ax.spines['left'].set_position(('data', 0))
