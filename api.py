@@ -15,12 +15,16 @@ def hello():
 def linear():
 
     if request.method == "GET":
-        return render_template('calculator.html', func_mode="linear")
+        if 'linear_func' not in session:
+            return render_template('calculator.html', func_mode="linear")
+        else:
+            image, func_detail = draw_multi_graph(
+                "linear", session.get('linear_func'))
+            return render_template('calculator.html', func_mode="linear", graph=image, func_detail=func_detail, func_information=session.get('linear_func'))
 
     elif request.method == "POST":
 
         func01_information = get_form_data(multi_query=True)
-        result = draw_graph("linear", *func01_information['coef'])
 
         func01_information.update({
             'show': True,
