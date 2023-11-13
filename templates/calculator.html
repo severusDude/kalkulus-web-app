@@ -55,14 +55,33 @@
 
 {% block result %}
 
-    <h3>{{ func_expr|safe }}</h3>
-
-    {% for point in points %}
-        <p>{{ point }}</p>
-    {% endfor %}
-
-    {% if graph %}
-        <img src='data:image/png;base64,{{ graph }}' alt="Graph cannot be displayed"/>
+    {% if func_detail %}
+        <div style="display: flex;">
+            <div style="overflow-y: scroll; max-height: 300px; width: 50%;">
+                {% for func, detail in func_detail.items() %}
+                    <div style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; box-shadow: 2px 2px 5px #888;">
+                        <div style="display: inline-block; margin-right: 10px;">
+                            <div style="width: 20px; height: 20px; border-radius: 50%; background-color: {{ func_information[func]['color'] }};"></div>
+                        </div>
+                        <h3 style="display: inline-block;">{{ detail['expr'] }}</h3>
+                        <br>
+                        <input type="radio" id="{{ func }}_show" name="{{ func }}_show" {% if func_information[func]['show'] %} checked {% endif %}>
+                        <label for="{{ func }}_show">Show</label>
+                        <input type="radio" id="{{ func }}_marker" name="{{ func }}_marker" {% if func_information[func]['marker'] %} checked {% endif %}>
+                        <label for="{{ func }}_marker">Marker</label>
+                        <select id="{{ func }}_color">
+                            <option value="red" {% if func_information[func]['color'] == 'red' %} selected {% endif %}>Red</option>
+                            <option value="blue" {% if func_information[func]['color'] == 'blue' %} selected {% endif %}>Blue</option>
+                            <option value="green" {% if func_information[func]['color'] == 'green' %} selected {% endif %}>Green</option>
+                            <!-- Add more color options as needed -->
+                        </select>
+                    </div>
+                {% endfor %}
+            </div>
+            <div style="width: 50%;">
+                <img src='data:image/png;base64,{{ graph }}' alt="Graph cannot be displayed"/>
+            </div>
+        </div>
     {% endif %}
 
 {% endblock result %}

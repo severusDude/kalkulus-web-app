@@ -22,6 +22,12 @@ def linear():
         func01_information = get_form_data(multi_query=True)
         result = draw_graph("linear", *func01_information['coef'])
 
+        func01_information.update({
+            'show': True,
+            'marker': True,
+            'color': 'blue'
+        })
+
         # create 'linear_func' item if it doesn't exist within session data
         if 'linear_func' not in session:
             session['linear_func'] = {'func_1': func01_information}
@@ -36,7 +42,7 @@ def linear():
         image, func_detail = draw_multi_graph(
             "linear", session.get('linear_func'))
 
-        return render_template('calculator.html', func_mode="linear", graph=image, points=result[1], func_expr=result[2])
+        return render_template('calculator.html', func_mode="linear", graph=image, func_detail=func_detail, func_information=session.get('linear_func'))
 
 
 @app.route("/quadratic", methods=["GET", "POST"])
