@@ -19,8 +19,23 @@ def linear():
 
     elif request.method == "POST":
 
-        coef = get_form_data(multi_query=False)
-        result = draw_graph("linear", *coef)
+        func01_information = get_form_data(multi_query=True)
+        result = draw_graph("linear", *func01_information['coef'])
+
+        # update obtained information with the result from draw_graph
+        func01_information.update(
+            {'points': result[1], 'func_expr': result[2]})
+
+        # create 'linear_func' item if it doesn't exist within session data
+        if 'linear_func' not in session:
+            session['linear_func'] = {'func_1': func01_information}
+
+        else:
+            session['linear_func'].update(
+                {f"func_{len(session['linear_func'])+1}": func01_information})
+
+            # to make sure the updated session is saved
+            session.modified = True
 
         return render_template('calculator.html', func_mode="linear", graph=result[0], points=result[1], func_expr=result[2])
 
