@@ -17,10 +17,8 @@ def linear():
 
     elif request.method == "POST":
 
-        coef = float(request.form['coefficient'])
-        const = float(request.form['constant'])
-
-        result = draw_graph("linear", coef, const)
+        coef = get_form_data()
+        result = draw_graph("linear", *coef)
 
         return render_template('calculator.html', func_mode="linear", graph=result[0], points=result[1], func_expr=result[2])
 
@@ -33,11 +31,8 @@ def quadratic():
 
     elif request.method == "POST":
 
-        coef_a = float(request.form['coefficient_a'])
-        coef_b = float(request.form['coefficient_b'])
-        coef_c = float(request.form['coefficient_c'])
-
-        result = draw_graph("quadratic", coef_a, coef_b, coef_c)
+        coef = get_form_data()
+        result = draw_graph("quadratic", *coef)
 
         return render_template('calculator.html', func_mode="quadratic", graph=result[0], points=result[1], func_expr=result[2])
 
@@ -50,12 +45,8 @@ def cubic():
 
     elif request.method == "POST":
 
-        coef_a = float(request.form['coefficient_a'])
-        coef_b = float(request.form['coefficient_b'])
-        coef_c = float(request.form['coefficient_c'])
-        coef_d = float(request.form['coefficient_d'])
-
-        result = draw_graph("cubic", coef_a, coef_b, coef_c, coef_d)
+        coef = get_form_data()
+        result = draw_graph("cubic", *coef)
 
         return render_template('calculator.html', func_mode="cubic", graph=result[0], points=result[1], func_expr=result[2])
 
