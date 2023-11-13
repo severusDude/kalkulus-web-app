@@ -60,5 +60,16 @@ def cubic():
         return render_template('calculator.html', func_mode="cubic", graph=result[0], points=result[1], func_expr=result[2])
 
 
+def get_form_data():
+    """Loop through posted form data and return it"""
+
+    data = ()
+
+    for value in request.form.values():
+        data = (*data, float(value))
+
+    return data
+
+
 if __name__ == "__main__":
     app.run(debug=True)
