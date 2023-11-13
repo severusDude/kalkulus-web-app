@@ -75,9 +75,20 @@ def draw_multi_graph(func_type, func_info):
     coord_list = []
 
     # loop to get axis limit
-    for detail in func_info.values():
-        coords = get_cubic_func_points(*detail['coef'])
-        coord_list.extend(coords)
+    if func_type == "linear":
+        for detail in func_info.values():
+            coords = get_linear_func_points(*detail['coef'])
+            coord_list.extend(coords)
+
+    elif func_type == "quadratic":
+        for detail in func_info.values():
+            coords = get_quadratic_func_points(*detail['coef'])
+            coord_list.extend(coords)
+
+    elif func_type == "cubic":
+        for detail in func_info.values():
+            coords = get_cubic_func_points(*detail['coef'])
+            coord_list.extend(coords)
 
     xlim = get_coord_limit(get_highest_coord_value(coord_list)[0])
     ylim = get_coord_limit(get_highest_coord_value(coord_list)[1])
