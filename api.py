@@ -23,8 +23,14 @@ def linear():
         result = draw_graph("linear", *func01_information['coef'])
 
         # update obtained information with the result from draw_graph
-        func01_information.update(
-            {'points': result[1], 'func_expr': result[2]})
+        # func01_information.update(
+        #     {'points': result[1], 'func_expr': result[2]})
+
+        func01_information.update({
+            'show': True,
+            'marker': True,
+            'color': 'blue'
+        })
 
         # create 'linear_func' item if it doesn't exist within session data
         if 'linear_func' not in session:
