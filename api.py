@@ -26,6 +26,7 @@ def linear():
 
         func01_information = get_form_data(multi_query=True)
 
+        # set default function options
         func01_information.update({
             'show': True,
             'marker': True,
@@ -51,7 +52,7 @@ def linear():
     elif request.method == "PUT":
         updated_func_information = request.get_json()
 
-        # Process the updated function data received
+        # Process the updated function data received and update session data
         for func_id, func_data in updated_func_information.items():
             session['linear_func'][func_id]['show'] = func_data['show']
             session['linear_func'][func_id]['marker'] = func_data['marker']
@@ -59,9 +60,11 @@ def linear():
 
             session.modified = True
 
+        # redraw the graph
         image, func_detail = draw_multi_graph(
             "linear", session.get('linear_func'))
 
+        # return need to be in form of json
         return jsonify({'image': image})
 
 
@@ -69,12 +72,18 @@ def linear():
 def quadratic():
 
     if request.method == "GET":
-        return render_template('calculator.html', func_mode="quadratic")
+        if 'quadratic_func' not in session:
+            return render_template('calculator.html', func_mode="quadratic")
+        else:
+            image, func_detail = draw_multi_graph(
+                "quadratic", session.get('quadratic_func'))
+            return render_template('calculator.html', func_mode="quadratic", graph=image, func_detail=func_detail, func_information=session.get('quadratic_func'))
 
     elif request.method == "POST":
 
         func02_information = get_form_data(multi_query=True)
 
+        # set default function options
         func02_information.update({
             'show': True,
             'marker': True,
@@ -100,7 +109,7 @@ def quadratic():
     elif request.method == "PUT":
         updated_func_information = request.get_json()
 
-        # Process the updated function data received
+        # Process the updated function data received and update session data
         for func_id, func_data in updated_func_information.items():
             session['quadratic_func'][func_id]['show'] = func_data['show']
             session['quadratic_func'][func_id]['marker'] = func_data['marker']
@@ -108,9 +117,11 @@ def quadratic():
 
             session.modified = True
 
+        # redraw the graph
         image, func_detail = draw_multi_graph(
             "quadratic", session.get('quadratic_func'))
 
+        # return need to be in form of json
         return jsonify({'image': image})
 
 
