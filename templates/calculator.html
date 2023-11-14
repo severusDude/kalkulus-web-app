@@ -105,7 +105,7 @@
                         <div style="display: inline-block; margin-right: 10px;">
                             <div style="width: 20px; height: 20px; border-radius: 50%; background-color: {{ func_information[func]['color'] }};"></div>
                         </div>
-                        <h3 style="display: inline-block;">{{ detail['expr'] }}</h3>
+                        <h3 style="display: inline-block;">{{ detail['expr']|safe }}</h3>
                         <br>
                         <input type="checkbox" id="{{ func }}_show" name="{{ func }}_show" {% if func_information[func]['show'] %} checked {% endif %}>
                         <label for="{{ func }}_show">Show</label>
