@@ -2,6 +2,7 @@ from matplotlib.figure import Figure
 import numpy as np
 import base64
 from io import BytesIO
+from copy import deepcopy
 from sympy import diff, solve, symbols
 
 
@@ -72,8 +73,10 @@ def draw_multi_graph(func_type, func_info):
     ax = fig.subplots()
 
     # use copy to prevent accidentally modified session data
-    func_detail = func_info.copy()
+    func_detail = deepcopy(func_info)
+
     coord_list = []
+    points = []
 
     # loop to get axis limit
     if func_type == "linear":
@@ -134,6 +137,7 @@ def draw_multi_graph(func_type, func_info):
                         pass
 
             # added points and func_expr to function information
+            func_detail[key].clear()  # clear current content
             func_detail[key] = {'points': points}
 
         # added func_expr to function information, separated to prevent error if func is hidden
