@@ -57,6 +57,46 @@
 
 
     {% if func_detail %}
+        <script>
+            function updateAllFunctionOptions() {
+                const allFuncData = {};
+                {% for func, _ in func_detail.items() %}
+                    const show_{{ func }} = document.getElementById('{{ func }}_show').checked;
+                    const marker_{{ func }} = document.getElementById('{{ func }}_marker').checked;
+                    const color_{{ func }} = document.getElementById('{{ func }}_color').value;
+
+                    allFuncData['{{ func }}'] = {
+                        'show': show_{{ func }},
+                        'marker': marker_{{ func }},
+                        'color': color_{{ func }}
+                    };
+                {% endfor %}
+
+                fetch('/{{ func_mode }}', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(allFuncData)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Network response was not ok.');
+                })
+                .then(data => {
+                    console.log('All function options updated successfully');
+                    // console.log(data)
+                    // Perform any view updates here if needed
+                    // For example, update elements on the page displaying the function options
+                    document.getElementById('graph').src = 'data:image/png;base64, ' + data.image;
+                })
+                .catch(error => {
+                    console.error('Error updating function options:', error);
+                });
+            }
+        </script>
 
         <div style="display: flex;">
             <div style="overflow-y: scroll; max-height: 300px; width: 50%;">
@@ -84,6 +124,7 @@
                 <img src='data:image/png;base64,{{ graph }}' alt="Graph cannot be displayed" id="graph"/>
             </div>
         </div>
+        <button onclick="updateAllFunctionOptions()">Update All Functions</button>
     {% endif %}
 
 {% endblock result %}
