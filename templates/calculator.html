@@ -70,6 +70,7 @@
                         'marker': marker_{{ func }},
                         'color': color_{{ func }}
                     };
+                    document.getElementById('{{ func }}_color_symbol').style.backgroundColor = color_{{ func }}
                 {% endfor %}
 
                 fetch('/{{ func_mode }}', {
@@ -103,7 +104,7 @@
                 {% for func, detail in func_detail.items() %}
                     <div style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; box-shadow: 2px 2px 5px #888;">
                         <div style="display: inline-block; margin-right: 10px;">
-                            <div style="width: 20px; height: 20px; border-radius: 50%; background-color: {{ func_information[func]['color'] }};"></div>
+                            <div style="width: 20px; height: 20px; border-radius: 50%; background-color: {{ func_information[func]['color'] }};" id="{{ func }}_color_symbol"></div>
                         </div>
                         <h3 style="display: inline-block;">{{ detail['expr']|safe }}</h3>
                         <br>
