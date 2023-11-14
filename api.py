@@ -65,7 +65,7 @@ def linear():
         return jsonify({'image': image})
 
 
-@app.route("/quadratic", methods=["GET", "POST"])
+@app.route("/quadratic", methods=["GET", "POST", "PUT"])
 def quadratic():
 
     if request.method == "GET":
@@ -73,10 +73,45 @@ def quadratic():
 
     elif request.method == "POST":
 
-        coef = get_form_data()
-        result = draw_graph("quadratic", *coef)
+        func02_information = get_form_data(multi_query=True)
 
-        return render_template('calculator.html', func_mode="quadratic", graph=result[0], points=result[1], func_expr=result[2])
+        func02_information.update({
+            'show': True,
+            'marker': True,
+            'color': 'blue'
+        })
+
+        # create 'quadratic_func' item if it doesn't exist within session data
+        if 'quadratic_func' not in session:
+            session['quadratic_func'] = {'func_1': func02_information}
+
+        else:
+            session['quadratic_func'].update(
+                {f"func_{len(session['quadratic_func'])+1}": func02_information})
+
+            # to make sure the updated session is saved
+            session.modified = True
+
+        image, func_detail = draw_multi_graph(
+            "quadratic", session.get('quadratic_func'))
+
+        return render_template('calculator.html', func_mode="quadratic", graph=image, func_detail=func_detail, func_information=session.get('quadratic_func'))
+
+    elif request.method == "PUT":
+        updated_func_information = request.get_json()
+
+        # Process the updated function data received
+        for func_id, func_data in updated_func_information.items():
+            session['quadratic_func'][func_id]['show'] = func_data['show']
+            session['quadratic_func'][func_id]['marker'] = func_data['marker']
+            session['quadratic_func'][func_id]['color'] = func_data['color']
+
+            session.modified = True
+
+        image, func_detail = draw_multi_graph(
+            "quadratic", session.get('quadratic_func'))
+
+        return jsonify({'image': image})
 
 
 @app.route("/cubic", methods=["GET", "POST"])
