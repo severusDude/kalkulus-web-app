@@ -125,18 +125,61 @@ def quadratic():
         return jsonify({'image': image})
 
 
-@app.route("/cubic", methods=["GET", "POST"])
+@app.route("/cubic", methods=["GET", "POST", "PUT"])
 def cubic():
 
     if request.method == "GET":
-        return render_template('calculator.html', func_mode="cubic")
+        if 'cubic_func' not in session:
+            return render_template('calculator.html', func_mode="cubic")
+        else:
+            image, func_detail = draw_multi_graph(
+                "cubic", session.get('cubic_func'))
+            return render_template('calculator.html', func_mode="cubic", graph=image, func_detail=func_detail, func_information=session.get('cubic_func'))
 
     elif request.method == "POST":
 
-        coef = get_form_data()
-        result = draw_graph("cubic", *coef)
+        func03_information = get_form_data(multi_query=True)
 
-        return render_template('calculator.html', func_mode="cubic", graph=result[0], points=result[1], func_expr=result[2])
+        # set default function options
+        func03_information.update({
+            'show': True,
+            'marker': True,
+            'color': 'blue'
+        })
+
+        # create 'cubic_func' item if it doesn't exist within session data
+        if 'cubic_func' not in session:
+            session['cubic_func'] = {'func_1': func03_information}
+
+        else:
+            session['cubic_func'].update(
+                {f"func_{len(session['cubic_func'])+1}": func03_information})
+
+            # to make sure the updated session is saved
+            session.modified = True
+
+        image, func_detail = draw_multi_graph(
+            "cubic", session.get('cubic_func'))
+
+        return render_template('calculator.html', func_mode="cubic", graph=image, func_detail=func_detail, func_information=session.get('cubic_func'))
+
+    elif request.method == "PUT":
+        updated_func_information = request.get_json()
+
+        # Process the updated function data received and update session data
+        for func_id, func_data in updated_func_information.items():
+            session['cubic_func'][func_id]['show'] = func_data['show']
+            session['cubic_func'][func_id]['marker'] = func_data['marker']
+            session['cubic_func'][func_id]['color'] = func_data['color']
+
+            session.modified = True
+
+        # redraw the graph
+        image, func_detail = draw_multi_graph(
+            "cubic", session.get('cubic_func'))
+
+        # return need to be in form of json
+        return jsonify({'image': image})
 
 
 def get_form_data(multi_query=True):
