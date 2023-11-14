@@ -130,8 +130,8 @@ def draw_multi_graph(func_type, func_info):
                     except:
                         pass
 
-        # added points and func_expr to function information
-        func_detail[key] = {'points': points, 'expr': get_func_exppr(*var)}
+            # added points and func_expr to function information
+            func_detail[key] = {'points': points, 'expr': get_func_exppr(*var)}
 
     # enable grid and limit the y-axis
     ax.grid(True)
