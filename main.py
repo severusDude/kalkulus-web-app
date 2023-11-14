@@ -134,7 +134,10 @@ def draw_multi_graph(func_type, func_info):
                         pass
 
             # added points and func_expr to function information
-            func_detail[key] = {'points': points, 'expr': get_func_exppr(*var)}
+            func_detail[key] = {'points': points}
+
+        # added func_expr to function information, separated to prevent error if func is hidden
+        func_detail[key].update({'expr': get_func_exppr(*var)})
 
     # enable grid and limit the y-axis
     ax.grid(True)
