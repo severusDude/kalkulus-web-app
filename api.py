@@ -1,4 +1,4 @@
-from flask import Flask, session, render_template, request
+from flask import Flask, session, render_template, request, jsonify
 from main import *
 
 app = Flask(__name__)
@@ -11,7 +11,7 @@ def hello():
     return render_template('home.html')
 
 
-@app.route("/linear", methods=["GET", "POST"])
+@app.route("/linear", methods=["GET", "POST", "PUT"])
 def linear():
 
     if request.method == "GET":
@@ -47,6 +47,22 @@ def linear():
             "linear", session.get('linear_func'))
 
         return render_template('calculator.html', func_mode="linear", graph=image, func_detail=func_detail, func_information=session.get('linear_func'))
+
+    elif request.method == "PUT":
+        updated_func_information = request.get_json()
+
+        # Process the updated function data received
+        for func_id, func_data in updated_func_information.items():
+            session['linear_func'][func_id]['show'] = func_data['show']
+            session['linear_func'][func_id]['marker'] = func_data['marker']
+            session['linear_func'][func_id]['color'] = func_data['color']
+
+            session.modified = True
+
+        image, func_detail = draw_multi_graph(
+            "linear", session.get('linear_func'))
+
+        return jsonify({'image': image})
 
 
 @app.route("/quadratic", methods=["GET", "POST"])
