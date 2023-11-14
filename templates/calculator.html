@@ -55,7 +55,9 @@
 
 {% block result %}
 
+
     {% if func_detail %}
+
         <div style="display: flex;">
             <div style="overflow-y: scroll; max-height: 300px; width: 50%;">
                 {% for func, detail in func_detail.items() %}
@@ -65,9 +67,9 @@
                         </div>
                         <h3 style="display: inline-block;">{{ detail['expr'] }}</h3>
                         <br>
-                        <input type="radio" id="{{ func }}_show" name="{{ func }}_show" {% if func_information[func]['show'] %} checked {% endif %}>
+                        <input type="checkbox" id="{{ func }}_show" name="{{ func }}_show" {% if func_information[func]['show'] %} checked {% endif %}>
                         <label for="{{ func }}_show">Show</label>
-                        <input type="radio" id="{{ func }}_marker" name="{{ func }}_marker" {% if func_information[func]['marker'] %} checked {% endif %}>
+                        <input type="checkbox" id="{{ func }}_marker" name="{{ func }}_marker" {% if func_information[func]['marker'] %} checked {% endif %}>
                         <label for="{{ func }}_marker">Marker</label>
                         <select id="{{ func }}_color">
                             <option value="red" {% if func_information[func]['color'] == 'red' %} selected {% endif %}>Red</option>
@@ -79,7 +81,7 @@
                 {% endfor %}
             </div>
             <div style="width: 50%;">
-                <img src='data:image/png;base64,{{ graph }}' alt="Graph cannot be displayed"/>
+                <img src='data:image/png;base64,{{ graph }}' alt="Graph cannot be displayed" id="graph"/>
             </div>
         </div>
     {% endif %}
