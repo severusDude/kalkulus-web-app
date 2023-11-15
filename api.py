@@ -125,7 +125,7 @@ def quadratic():
         return jsonify({'image': image})
 
 
-@app.route("/cubic", methods=["GET", "POST", "PUT"])
+@app.route("/cubic", methods=["GET", "POST", "PUT", "DELETE"])
 def cubic():
 
     if request.method == "GET":
@@ -180,6 +180,13 @@ def cubic():
 
         # return need to be in form of json
         return jsonify({'image': image})
+
+    elif request.method == "DELETE":
+
+        session.pop('cubic_func', None)
+        session.modified = True
+
+        return redirect(url_for('cubic'))
 
 
 def get_form_data(multi_query=True):

@@ -96,6 +96,25 @@
                 .catch(error => {
                     console.error('Error updating function options:', error);
                 });
+            };
+
+            function clearQuery() {
+                fetch('/{{ func_mode }}', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok.');
+                    }
+                    console.log('All queried functions are deleted');
+                    window.location.reload(); // refresh the page to reload views
+                })
+                .catch(error => {
+                    console.error('Error deleting queried functions', error);
+                });
             }
         </script>
 
@@ -126,6 +145,7 @@
             </div>
         </div>
         <button onclick="updateAllFunctionOptions()">Update All Functions</button>
+        <button onclick="clearQuery()">Clear Query</button>
     {% endif %}
 
 {% endblock result %}
