@@ -7,7 +7,6 @@ app.secret_key = "BAD_SECRET_KEY"
 
 @app.route("/", methods=["GET"])
 def hello():
-    session.clear()
     return render_template('home.html')
 
 
