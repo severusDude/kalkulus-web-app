@@ -186,7 +186,7 @@ def cubic():
         session.pop('cubic_func', None)
         session.modified = True
 
-        return redirect(url_for('cubic'))
+        return redirect(url_for('cubic'), code=303)
 
 
 def get_form_data(multi_query=True):
