@@ -11,7 +11,7 @@ def hello():
     return render_template('home.html')
 
 
-@app.route("/linear", methods=["GET", "POST", "PUT"])
+@app.route("/linear", methods=["GET", "POST", "PUT", "DELETE"])
 def linear():
 
     if request.method == "GET":
@@ -67,8 +67,15 @@ def linear():
         # return need to be in form of json
         return jsonify({'image': image})
 
+    elif request.method == "DELETE":
 
-@app.route("/quadratic", methods=["GET", "POST", "PUT"])
+        session.pop('linear_func', None)
+        session.modified = True
+
+        return redirect(url_for('linear'), code=303)
+
+
+@app.route("/quadratic", methods=["GET", "POST", "PUT", "DELETE"])
 def quadratic():
 
     if request.method == "GET":
@@ -123,6 +130,13 @@ def quadratic():
 
         # return need to be in form of json
         return jsonify({'image': image})
+
+    elif request.method == "DELETE":
+
+        session.pop('quadratic_func', None)
+        session.modified = True
+
+        return redirect(url_for('quadratic'), code=303)
 
 
 @app.route("/cubic", methods=["GET", "POST", "PUT", "DELETE"])
