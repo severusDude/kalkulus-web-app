@@ -1,4 +1,4 @@
-from flask import Flask, session, render_template, request, jsonify
+from flask import Flask, session, render_template, request, jsonify, redirect, url_for
 from main import *
 
 app = Flask(__name__)
@@ -47,7 +47,7 @@ def linear():
         image, func_detail = draw_multi_graph(
             "linear", session.get('linear_func'))
 
-        return render_template('calculator.html', func_mode="linear", graph=image, func_detail=func_detail, func_information=session.get('linear_func'))
+        return redirect(url_for('linear'))
 
     elif request.method == "PUT":
         updated_func_information = request.get_json()
@@ -104,7 +104,7 @@ def quadratic():
         image, func_detail = draw_multi_graph(
             "quadratic", session.get('quadratic_func'))
 
-        return render_template('calculator.html', func_mode="quadratic", graph=image, func_detail=func_detail, func_information=session.get('quadratic_func'))
+        return redirect(url_for('quadratic'))
 
     elif request.method == "PUT":
         updated_func_information = request.get_json()
@@ -161,7 +161,7 @@ def cubic():
         image, func_detail = draw_multi_graph(
             "cubic", session.get('cubic_func'))
 
-        return render_template('calculator.html', func_mode="cubic", graph=image, func_detail=func_detail, func_information=session.get('cubic_func'))
+        return redirect(url_for('cubic'))
 
     elif request.method == "PUT":
         updated_func_information = request.get_json()
