@@ -60,18 +60,20 @@
         <script>
             function updateAllFunctionOptions() {
                 const allFuncData = {};
-                {% for func, _ in func_detail.items() %}
-                    const show_{{ func }} = document.getElementById('{{ func }}_show').checked;
-                    const marker_{{ func }} = document.getElementById('{{ func }}_marker').checked;
-                    const color_{{ func }} = document.getElementById('{{ func }}_color').value;
-
-                    allFuncData['{{ func }}'] = {
-                        'show': show_{{ func }},
-                        'marker': marker_{{ func }},
-                        'color': color_{{ func }}
+                func_detail = JSON.parse('{{ func_detail|tojson }}');
+                
+                Object.entries(func_detail).forEach(([func, _]) => {
+                    const showFunc = document.getElementById(`${func}_show`).checked;
+                    const markerFunc = document.getElementById(`${func}_marker`).checked;
+                    const colorFunc = document.getElementById(`${func}_color`).value;
+                
+                    allFuncData[func] = {
+                        show: showFunc,
+                        marker: markerFunc,
+                        color: colorFunc
                     };
-                    document.getElementById('{{ func }}_color_symbol').style.backgroundColor = color_{{ func }}
-                {% endfor %}
+                    document.getElementById(`${func}_color_symbol`).style.backgroundColor = colorFunc;
+                });
 
                 fetch('/{{ func_mode }}', {
                     method: 'PUT',
