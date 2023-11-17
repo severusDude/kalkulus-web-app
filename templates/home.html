@@ -11,9 +11,9 @@
     <header>
         <nav>
             <ul>
-                <a href=" {{ url_for('linear') }} ">Linear</a>
-                <a href=" {{ url_for('quadratic') }} ">Quadratic</a>
-                <a href=" {{ url_for('cubic') }} ">Cubic</a>
+                <a href=" {{ url_for('handle_functions', function_type='linear') }} ">Linear</a>
+                <a href=" {{ url_for('handle_functions', function_type='quadratic') }} ">Quadratic</a>
+                <a href=" {{ url_for('handle_functions', function_type='cubic') }} ">Cubic</a>
             </ul>
         </nav>
     </header>
