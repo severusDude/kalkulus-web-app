@@ -76,44 +76,57 @@ def draw_multi_graph(func_type, func_info):
     func_detail = deepcopy(func_info)
 
     coord_list = []
-    points = []
 
     # loop to get axis limit
-    for detail in func_info.values():
-        if func_type == "linear" and detail['show']:
-            coords = get_linear_func_points(*detail['coef'])
-            coord_list.extend(coords)
+    for key, detail in func_info.items():
+        var = detail['coef']
 
-        elif func_type == "quadratic" and detail['show']:
-            coords = get_quadratic_func_points(*detail['coef'])
-            coord_list.extend(coords)
+        if detail['show']:
+            func_detail[key].clear()  # to clear current functions content
 
-        elif func_type == "cubic" and detail['show']:
-            coords = get_cubic_func_points(*detail['coef'])
-            coord_list.extend(coords)
-
-    xlim = get_coord_limit(get_highest_coord_value(coord_list)[0])
-    ylim = get_coord_limit(get_highest_coord_value(coord_list)[1])
-
-    x = np.arange(*xlim, 0.01)
-
-    for key, value in func_info.items():
-        var = value['coef']
-
-        # draw graph if option enabled
-        if value['show']:
             if func_type == "linear":
-                points = get_linear_func_points(*var)
-                y = var[0]*x + var[1]
+                coords = get_linear_func_points(*detail['coef'])
+                # get all points to get highest absolute coord
+                coord_list.extend(coords)
+
+                # to store expression based on function type,
+                # doesn't need to be in for loop ik
+                # but the func_type checking is only in here so yeah
+                func_detail[key] = {
+                    'type': f'{var[0]}*x + {var[1]}'}
 
             elif func_type == "quadratic":
-                points = get_quadratic_func_points(*var)
-                y = var[0]*x**2 + var[1]*x + var[2]
+                coords = get_quadratic_func_points(*detail['coef'])
+                coord_list.extend(coords)
+
+                func_detail[key] = {
+                    'type': f'{var[0]}*x**2 + {var[1]}*x + {var[2]}'}
 
             elif func_type == "cubic":
-                points = get_cubic_func_points(*var)
-                y = var[0]*x**3 + var[1]*x**2 + var[2]*x + var[3]
+                coords = get_cubic_func_points(*detail['coef'])
+                coord_list.extend(coords)
 
+                func_detail[key] = {
+                    'type': f'{var[0]}*x**3 + {var[1]}*x**2 + {var[2]}*x + {var[3]}'}
+
+            func_detail[key].update(
+                {'points': coords, 'marker': detail['marker'], 'color': detail['color']})
+
+        else:
+            func_detail[key] = {
+                'expr': get_func_exppr(*func_info[key]['coef'])}
+
+    xlim, ylim = get_axis_limit(coord_list)
+    x = np.arange(*xlim, 0.01)
+
+    for key, value in func_detail.items():
+
+        if 'expr' not in value:  # if expr exists, mean the func is hidden
+
+            # draw graph
+            # should be safe using eval since the expression is not from user
+            points = value['points']
+            y = eval(value['type'])
             ax.plot(x, y, color=value['color'])
 
             if value['marker']:
@@ -123,6 +136,8 @@ def draw_multi_graph(func_type, func_info):
                     x[0]+abs(x[0]*10/100), x[1]-abs(x[1]*10/100))
 
                 for coord in points:
+
+                    # sometimes it will get an error relating to complex number, this is to ignore those error
                     try:
                         ax.plot(coord[0], coord[1], marker="o", markersize=5,
                                 markerfacecolor="red", markeredgecolor="black")
@@ -131,12 +146,9 @@ def draw_multi_graph(func_type, func_info):
                     except:
                         pass
 
-            # added points and func_expr to function information
-            func_detail[key].clear()  # clear current content
-            func_detail[key] = {'points': points}
-
-        # added func_expr to function information, separated to prevent error if func is hidden
-        func_detail[key].update({'expr': get_func_exppr(*var)})
+            # replace func content with points and func_expr
+            func_detail[key] = {'points': points,
+                                'expr': get_func_exppr(*func_info[key]['coef'])}
 
     # enable grid and limit the y-axis
     ax.grid(True)
@@ -148,6 +160,7 @@ def draw_multi_graph(func_type, func_info):
     ax.spines['right'].set_color('none')
     ax.spines['top'].set_color('none')
 
+    # encode the fig
     buf = BytesIO()
     fig.savefig(buf, format="png")
 
@@ -301,4 +314,4 @@ def get_coord_limit(x): return (-abs(x)*2, abs(x)*2)
 
 
 # if __name__ == "__main__":
-#     print(get_cubic_func_points(2, -3, 0, 0))
+#     # print(get_cubic_func_points(2, -3, 0, 0))
