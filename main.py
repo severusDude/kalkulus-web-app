@@ -259,6 +259,28 @@ def get_func_exppr(*numbers):
     return func_exppr
 
 
+def get_axis_limit(coord_list):
+    """Get number to limit axis on plotting"""
+
+    axis_limit = [-1, -1]
+
+    for coord in coord_list:
+        x_coord = float(abs(coord[0]))
+        y_coord = float(abs(coord[1]))
+
+        if x_coord > axis_limit[0]:
+            axis_limit[0] = x_coord
+
+        if y_coord > axis_limit[1]:
+            axis_limit[1] = y_coord
+
+    # return in a tupple containing both negative and positive of each axis limit
+    axis_limit = [(-axis_limit[0]*2, axis_limit[0]*2),
+                  (-axis_limit[1]*2, axis_limit[1]*2)]
+
+    return axis_limit
+
+
 def get_highest_coord_value(coord_list):
     axis_limit = [0, 0]
 
