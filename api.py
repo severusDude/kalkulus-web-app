@@ -44,9 +44,6 @@ def handle_functions(function_type):
             # to make sure the updated session is saved
             session.modified = True
 
-        image, func_detail = draw_multi_graph(
-            function_type, session.get(func_session))
-
         return redirect(url_for('handle_functions', function_type=function_type))
 
     elif request.method == "PUT":
