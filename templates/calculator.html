@@ -32,7 +32,7 @@
               
             <div class="button-group">
                 <input class="button" type="submit" value="OK">
-                <input class="reset" type="button" onclick="reset()" value="Reset">
+                <input class="button" type="button" onclick="reset()" value="Reset">
             </div>
         </form>
     </div>
@@ -113,34 +113,44 @@
             }
         </script>
 
-        <div style="display: flex;">
-            <div style="overflow-y: scroll; max-height: 300px; width: 50%;">
-                {% for func, detail in func_detail.items() %}
-                    <div style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; box-shadow: 2px 2px 5px #888;">
-                        <div style="display: inline-block; margin-right: 10px;">
-                            <div style="width: 20px; height: 20px; border-radius: 50%; background-color: {{ func_information[func]['color'] }};" id="{{ func }}_color_symbol"></div>
-                        </div>
-                        <h3 style="display: inline-block;">{{ detail['expr']|safe }}</h3>
-                        <br>
-                        <input type="checkbox" id="{{ func }}_show" name="{{ func }}_show" {% if func_information[func]['show'] %} checked {% endif %}>
-                        <label for="{{ func }}_show">Show</label>
-                        <input type="checkbox" id="{{ func }}_marker" name="{{ func }}_marker" {% if func_information[func]['marker'] %} checked {% endif %}>
-                        <label for="{{ func }}_marker">Marker</label>
-                        <select id="{{ func }}_color">
-                            <option value="red" {% if func_information[func]['color'] == 'red' %} selected {% endif %}>Red</option>
-                            <option value="blue" {% if func_information[func]['color'] == 'blue' %} selected {% endif %}>Blue</option>
-                            <option value="green" {% if func_information[func]['color'] == 'green' %} selected {% endif %}>Green</option>
-                            <!-- Add more color options as needed -->
-                        </select>
+        <div class="container">
+            <div class="flex-container">
+                <div class="left-content">
+                    <div class="scrollable-div">
+                        {% for func, detail in func_detail.items() %}
+                            <div class="function-detail">
+                                <div class="func-expr-container">
+                                    <div class="color-symbol" style="background-color: {{ func_information[func]['color'] }};" id="{{ func }}_color_symbol"></div>
+                                    <h3>{{ detail['expr']|safe }}</h3>
+                                </div>
+                                <br>
+                                <div class="func-opt-container">
+                                    <input class="custom-checkbox" type="checkbox" id="{{ func }}_show" name="{{ func }}_show" {% if func_information[func]['show'] %} checked {% endif %}>
+                                    <label class="checkbox-label" for="{{ func }}_show">Show</label>
+                                    <input class="custom-checkbox" type="checkbox" id="{{ func }}_marker" name="{{ func }}_marker" {% if func_information[func]['marker'] %} checked {% endif %}>
+                                    <label class="checkbox-label" for="{{ func }}_marker">Marker</label>
+                                    <select class="opt-dropdown" id="{{ func }}_color">
+                                        <option value="red" {% if func_information[func]['color'] == 'red' %} selected {% endif %}>Red</option>
+                                        <option value="blue" {% if func_information[func]['color'] == 'blue' %} selected {% endif %}>Blue</option>
+                                        <option value="green" {% if func_information[func]['color'] == 'green' %} selected {% endif %}>Green</option>
+                                        <!-- Add more color options as needed -->
+                                    </select>
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
-            </div>
-            <div style="width: 50%;">
-                <img src='data:image/png;base64,{{ graph }}' alt="Graph cannot be displayed" id="graph"/>
+                    <div class="button-group">
+                        <button class="button" onclick="updateAllFunctionOptions()">Update All Functions</button>
+                        <button class="button" onclick="clearQuery()">Clear Query</button>
+                    </div>
+                </div>
+                <div class="right-content">
+                    <div class="flex-container right-content">
+                        <img src='data:image/png;base64,{{ graph }}' alt="Graph cannot be displayed" id="graph"/>
+                    </div>
+                </div>
             </div>
         </div>
-        <button onclick="updateAllFunctionOptions()">Update All Functions</button>
-        <button onclick="clearQuery()">Clear Query</button>
     {% endif %}
 
 {% endblock result %}

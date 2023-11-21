@@ -74,10 +74,9 @@ body {
     display: flex;
 }
 
-.button,
-.reset {
+.button {
     padding: 10px 20px;
-    margin-top: 10px;
+    margin: 0 10px auto 4px;
     border: none;
     border-radius: 5px;
     background-color: #007bff;
@@ -86,11 +85,178 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.button:hover,
-.reset:hover {
+.button:hover {
     background-color: #0056b3;
 }
 
-.reset {
-    margin-left: 10px;
+/* RESULT BOX */
+
+/* Styles for the outermost flex container */
+.flex-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-container .left-content {
+    display: block;
+}
+
+.flex-container .right-content {
+    display: inline;
+}
+
+.flex-container .right-content img {
+    size: 100%;
+    border-radius: 4px;
+}
+
+/* Media query for phones or smaller screens */
+@media screen and (max-width: 600px) {
+    .flex-container {
+        flex-direction: column;
+        /* Change to a column layout for smaller screens */
+    }
+
+    .flex-container .right-content {
+        margin-top: 10px;
+        display: block;
+        /* Make right content display as block to appear underneath left content */
+    }
+}
+
+/* Styles for the scrollable div */
+.scrollable-div {
+    overflow-y: auto;
+    /* Using auto instead of scroll to show the scrollbar only when needed */
+    max-height: 480px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #72767d transparent;
+    padding-right: 4px;
+}
+
+/* Styles for the individual function detail items */
+.function-detail {
+    border: 1px solid #6d6d6d;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Custom scrollbar styles for Chrome, Edge, and Safari */
+.scrollable-div::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scrollable-div::-webkit-scrollbar-thumb {
+    background-color: #72767d;
+    border-radius: 4px;
+    /* Rounded thumb */
+}
+
+.scrollable-div::-webkit-scrollbar-track {
+    background-color: #5e5e5e;
+    border-radius: 8px;
+}
+
+/* Expr Container */
+.func-expr-container {
+    display: inline-flex;
+    align-items: center;
+    margin: 20px 10px;
+    /* Adjust margin as needed */
+}
+
+/* Red Circle */
+.func-expr-container .color-symbol {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 15px;
+    /* Adjust spacing between circle and text */
+}
+
+/* H3 Style */
+.func-expr-container h3 {
+    font-family: Arial, sans-serif;
+    font-size: 1.2em;
+    margin: 0;
+}
+
+/* Dark Themed Rectangle */
+.func-opt-container {
+    position: relative;
+    bottom: 5px;
+    /* Adjust distance from the bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    background-color: #707070;
+    border-radius: 10px;
+    padding: 10px;
+    /* Padding inside the rectangle */
+    display: flex;
+    align-items: center;
+    height: auto;
+}
+
+/* Checkbox Styling */
+.custom-checkbox {
+    display: none;
+}
+
+.checkbox-label {
+    display: inline-block;
+    padding: 8px 12px;
+    color: #007bff;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Unchecked State */
+.custom-checkbox+.checkbox-label {
+    background-color: #ccc;
+    color: #252525;
+}
+
+/* Checked State */
+.custom-checkbox+.checkbox-label:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Checked State */
+.custom-checkbox:checked+.checkbox-label {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Animation on Hover */
+.custom-checkbox:checked+.checkbox-label:hover {
+    background-color: #0056b3;
+}
+
+/* Dropdown Styling */
+.opt-dropdown {
+    width: calc(100%);
+    padding: 8px 12px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    background-color: #ccc;
+    color: #252525;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dropdown Hover Effect */
+.opt-dropdown:hover {
+    background-color: #007bff;
+    color: #fff;
 }
