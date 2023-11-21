@@ -9,15 +9,18 @@
 </head>
 
 <body>
-    <header>
-        <nav>
-            <ul>
-                <a href=" {{ url_for('handle_functions', function_type='linear') }} ">Linear</a>
-                <a href=" {{ url_for('handle_functions', function_type='quadratic') }} ">Quadratic</a>
-                <a href=" {{ url_for('handle_functions', function_type='cubic') }} ">Cubic</a>
-            </ul>
-        </nav>
-    </header>
+    <nav class="navbar">
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link" href=" {{ url_for('hello') }} ">Home</a>
+            <li class="nav-item"><a class="nav-link"
+                    href=" {{ url_for('handle_functions', function_type='linear') }} ">Linear</a>
+            </li>
+            <li class="nav-item"><a class="nav-link"
+                    href=" {{ url_for('handle_functions', function_type='quadratic') }} ">Quadratic</a></li>
+            <li class="nav-item"><a class="nav-link"
+                    href=" {{ url_for('handle_functions', function_type='cubic') }} ">Cubic</a></li>
+        </ul>
+    </nav>
     <br>
     {% block calculator %}
     {% endblock calculator %}

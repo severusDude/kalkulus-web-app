@@ -6,6 +6,57 @@ body {
     padding: 0;
 }
 
+/* NAVBAR */
+
+.navbar {
+    background-color: #0056b3;
+    /* Dark background */
+    color: #fff;
+    font-family: Arial, sans-serif;
+    position: sticky;
+    top: 0;
+}
+
+.nav-list {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px;
+    border-radius: 20px;
+    list-style: none;
+    /* Rounded edges */
+}
+
+.nav-item {
+    margin-right: 15px;
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    padding: 8px 15px;
+    border-radius: 10px;
+}
+
+.nav-link:hover {
+    transform: scale(1.1);
+    background-color: #444;
+    color: #007bff;
+    /* Darker background on hover */
+}
+
+/* Media query for responsiveness */
+@media screen and (max-width: 768px) {
+    .nav-list {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .nav-item {
+        margin: 10px 0;
+    }
+}
+
 /* INPUT BOX */
 
 .container {
