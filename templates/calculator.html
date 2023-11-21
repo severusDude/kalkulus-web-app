@@ -4,93 +4,38 @@
 
 {% block calculator %}
 
-{% if func_mode == "linear" %}
+    <div class="container">
+        <h2 class="function-type">{{ func_mode|capitalize }} Function</h2>
 
-        <div class="container">
-            <h2 class="function-type">Linear Function</h2>
-            
-            <form class="calculator-input-container" id="coefficient_form" method="POST">
-                <div class="input-group">
-                    <div class="label-group">
-                        <input type="number" name="coefficient_a" required>
-                        <label for="coefficient_a">x</label>
-                    </div>
-                    <div class="label-group">
-                        <input type="number" name="coefficient_b" required>
-                        <label for="coefficient_b">Constant</label>
-                    </div>
-                </div>
-            
-                <div class="button-group">
-                    <input class="button" type="submit" value="OK">
-                    <input class="reset" type="button" onclick="reset()" value="Reset">
-                </div>
-            </form>
-        </div>
+        <form class="calculator-input-container" id="coefficient_form" method="POST">
+            {% if func_mode == "linear" %}
+                {% set coefficients = ['coefficient_a', 'coefficient_b'] %}
+                {% set labels = ['x', 'Constant'] %}
+            {% elif func_mode == "quadratic" %}
+                {% set coefficients = ['coefficient_a', 'coefficient_b', 'coefficient_c'] %}
+                {% set labels = ['x<sup>2</sup>', 'x', 'Constant'] %}
+            {% elif func_mode == "cubic" %}
+                {% set coefficients = ['coefficient_a', 'coefficient_b', 'coefficient_c', 'coefficient_d'] %}
+                {% set labels = ['x<sup>3</sup>', 'x<sup>2</sup>', 'x', 'Constant'] %}
+            {% endif %}
 
+            {% set inputs_count = coefficients | length %}
 
-    {% elif func_mode == "quadratic" %}
-
-        <div class="container">
-            <h2 class="function-type">Quadratic Function</h2>
-            
-            <form class="calculator-input-container" id="coefficient_form" method="POST">
-                <div class="input-group">
+            <div class="input-group">
+                {% for i in range(inputs_count) %}
                     <div class="label-group">
-                        <input type="number" name="coefficient_a" required>
-                        <label for="coefficient_a">x<sup>2</sup></label>
+                        <input type="number" name="{{ coefficients[i] }}"><br>
+                        <label for="{{ coefficients[i] }}">{{ labels[i] | safe }}</label>
                     </div>
-                    <div class="label-group">
-                        <input type="number" name="coefficient_b" required>
-                        <label for="coefficient_b">x</label>
-                    </div>
-                    <div class="label-group">
-                        <input type="number" name="coefficient_c" required>
-                        <label for="coefficient_c">Constant</label>
-                    </div>
-                </div>
-            
-                <div class="button-group">
-                    <input class="button" type="submit" value="OK">
-                    <input class="reset" type="button" onclick="reset()" value="Reset">
-                </div>
-            </form>
-        </div>
-
-    {% elif func_mode == "cubic" %}
-
-        <div class="container">
-            <h2 class="function-type">Cubic Function</h2>
-            
-            <form class="calculator-input-container" id="coefficient_form" method="POST">
-                <div class="input-group">
-                    <div class="label-group">
-                        <input type="number" name="coefficient_a" required>
-                        <label for="coefficient_a">x<sup>3</sup></label>
-                    </div>
-                    <div class="label-group">
-                        <input type="number" name="coefficient_b" required>
-                        <label for="coefficient_b">x<sup>2</sup></label>
-                    </div>
-                    <div class="label-group">
-                        <input type="number" name="coefficient_c" required>
-                        <label for="coefficient_c">x</label>
-                    </div>
-                    <div class="label-group">
-                        <input type="number" name="coefficient_d" required>
-                        <label for="coefficient_d">Constant</label>
-                    </div>
-                </div>
-            
-                <div class="button-group">
-                    <input class="button" type="submit" value="OK">
-                    <input class="reset" type="button" onclick="reset()" value="Reset">
-                </div>
-            </form>
-        </div>
-
-    {% endif %}
-
+                {% endfor %}
+            </div>
+              
+            <div class="button-group">
+                <input class="button" type="submit" value="OK">
+                <input class="reset" type="button" onclick="reset()" value="Reset">
+            </div>
+        </form>
+    </div>
 
 
     <script>
