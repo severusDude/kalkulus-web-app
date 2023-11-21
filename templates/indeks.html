@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InstaKalkulus</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,700;1,700&display=swap" rel="stylesheet">
+
+
+<!-- Icons -->
+<script src="https://unpkg.com/feather-icons"></script>
+
+<!-- Style -->
+    <link rel="stylesheet" href=" {{ url_for('static', filename='css/style.css') }} ">
+
+</head>
+
+<body>
+
+<!-- Navbar Start -->
+<nav class="navbar">
+    <a href="#" class="navbar-logo">Insta<span>Kalkulus</span>.</a>
+
+    <div class="navbar-nav">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#kalkulator">Materi</a>
+        <a href="#profile">Profile</a>
+    </div>
+
+    <div class="navbar-extra">
+        <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
+    </div>
+</nav>
+<!-- Navbar End -->
+
+<!-- Hero Section Start -->
+<section class="hero" id="home">
+    <main class="content">
+        <h1>Welcome To <span>InstaKalkulus</span></h1>
+        <p>Menyelesaikan Persoalan Tentang Kalkulus</p>
+        <a href="#kalkulator" class="cta">Pelajari Sekarang</a>
+    </main>
+</section>
+
+<!-- Hero Section End -->
+
+<!-- About Section Start -->
+<section id="about" class="about">
+    <h2><span>About</span> Us</h2>
+
+    <div class="row">
+        <div class="about-img">
+            <!-- <img src="" alt="Tentang Kami"> -->
+        </div>
+        <div class="content">
+            <h3>Kenapa harus memakai Kami ?</h3>
+            <p>Kami membuat program ini untuk membantu kalian 
+            menyelesaikan tugas Kalkulus dengan sangat mudah dan
+            ada banyak sekali program kalkulus yang dapat kalian pakai.</p>
+        </div>
+    </div>
+</section>
+
+<!-- About Section End -->
+
+<!-- Kalkulator Section Start -->
+<section id="kalkulator" class="kalkulator">
+    <h2><span>Materi</span> Fungsi</h2>
+
+    <div class="row-card">
+        
+        <div class="card">
+            <div class="content-card">
+            <p class="heading">Linear
+            </p><p class="para">
+                Fungsi Linear adalah relasi yang memasangkan setiap anggota yang ada di himpunan
+                A dengan anggota lain di himpunan B. Semua anggota yang ada di himpunan A harus berpasangan
+                dengan anggota yang ada di himpunan B. Fungsi linear ini disebut juga dengan Persamaan Garis Lurus (PGL).
+            </p>
+            <a class="btn" href=" {{ url_for('handle_functions', function_type='linear') }} ">Hitung</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="content-card">
+            <p class="heading">Kuadrat
+            </p><p class="para">
+                Fungsi Kuadrat adalah sebuah fungsi polinomial atau suku banyak dimana pangkat 
+                tertinggi dari variable atau peubahnya adalah 2. Maka, bentuk umum dari fungsi 
+                kuadrat mendekati persamaan kuadrat.
+            </p>
+            <a class="btn" href=" {{ url_for('handle_functions', function_type='quadratic') }} ">Hitung</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="content-card">
+            <p class="heading">Kubik
+            </p><p class="para">
+                Fungsi Kubik adalah fungsi polinomial berderajat tiga yang berarti pangkat tertinggi dari variabel tersebutX
+                adalah3. Bentuk umum fungsi kubik adalahF( x ) = sebuahX3+ bX2+ c x + d, Di mana A, B, C, Dan D adalah konstanta.
+                Koefisien a menentukan bentuk kurva dan apakah fungsi tersebut mempunyai nilai maksimum atau minimum.
+            </p>
+            <a class="btn" href=" {{ url_for('handle_functions', function_type='cubic') }} ">Hitung</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Kalkulator Section End -->
+
+<!-- Profile Section Start -->
+<section id="profile" class="profile">
+    <h2>Profile</h2>
+
+    <div class="row-profile">
+        <div class="card-profile">
+            <div class="image"></div>
+            <div class="card-info">
+            <span>Luthfi Fajar</span>
+            <p>Informatika</p>
+            </div>
+            <a class="button" href="#">Folow</a>
+        </div>
+
+        <div class="card-profile">
+            <div class="image"></div>
+            <div class="card-info">
+            <span>Shifa Halimatu</span>
+            <p>Informatika</p>
+            </div>
+            <a class="button" href="#">Folow</a>
+        </div>
+
+        <div class="card-profile">
+            <div class="image"></div>
+            <div class="card-info">
+            <span>Rifqal Munzammil</span>
+            <p>Informatika</p>
+            </div>
+            <a class="button" href="#">Folow</a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="socials">
+        <a href="#"><i data-feather="twitter"></i></a>
+        <a href="#"><i data-feather="instagram"></i></a>
+        <a href="#"><i data-feather="facebook"></i></a>
+    </div>
+
+    <div class="links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#kalkulator">Kalkulator</a>
+        <a href="#profile">Profile</a>
+    </div>
+
+    <div class="credit">
+        <p>Created by <a href="">Kalkulus 1</a>. | &copy; 2023.</p>
+    </div>
+</footer>
+
+
+
+
+
+<!-- Profile Section End -->
+
+<!-- Icons -->
+<script>
+    feather.replace();
+</script>
+
+<!-- My Javascript -->
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -7,7 +7,7 @@ app.secret_key = "BAD_SECRET_KEY"
 
 @app.route("/", methods=["GET"])
 def hello():
-    return render_template('home.html')
+    return render_template('indeks.html')
 
 
 @app.route("/<function_type>", methods=["GET", "POST", "PUT", "DELETE"])
