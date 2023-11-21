@@ -27,8 +27,8 @@ def get_quadratic_func_points(*coef):
 
     points.append([0, coef[2]])
 
-    points.extend([[round(x, 2), 0] for x in np.roots(
-        [coef[0], coef[1], coef[2]])])
+    points.extend([[round(x, 2), 0.0]
+                  for x in np.roots([*coef]) if np.isreal(x)])
 
     return points
 
